@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "294436929724-7vnqqi4g4ame2a4dkjc4e3t8ulaecq9l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "prm.tomaszewapp2",
+            "certificate_hash": "069a5fb76f4effefa2ee6dc55c559ac022790b33"
+          }
+        },
+        {
           "client_id": "294436929724-ac7mq6rrf3rj0hmd6m8a8k5gl85un4pk.apps.googleusercontent.com",
           "client_type": 3
         }
