@@ -9,7 +9,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/loginInputLayout"
     >
-        <android.support.design.widget.TextInputEditText
+        <EditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="Email"
@@ -25,7 +25,7 @@
             android:layout_weight="1"
             android:layout_below="@id/loginInputLayout"
     >
-        <android.support.design.widget.TextInputEditText
+        <EditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="Password"
