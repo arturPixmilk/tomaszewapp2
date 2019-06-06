@@ -6,6 +6,7 @@
                                              android:id="@+id/constraintLayout"
                                              tools:context=".MainActivity"
 >
+    <include android:id="@+id/toolbar" layout="@layout/toolbar"/>
     <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"

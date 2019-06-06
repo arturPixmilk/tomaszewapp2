@@ -3,39 +3,39 @@ package prm.tomaszewapp2
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.os.PersistableBundle
+import android.support.design.widget.TextInputEditText
 import android.support.v7.app.AppCompatActivity
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
-import android.widget.TextView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import java.io.File
 
-class ItemDetailsActivity : AppCompatActivity() {
+class ItemEditActivity : AppCompatActivity() {
     val storage = FirebaseStorage.getInstance().reference
     val database = FirebaseDatabase.getInstance().reference
     val auth = FirebaseAuth.getInstance()
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_item_details)
+        setContentView(R.layout.activity_item_edit)
 
-
-        val name = findViewById<TextView>(R.id.itemName)
-        val radius = findViewById<TextView>(R.id.itemRadius)
-        val type = findViewById<TextView>(R.id.itemType)
+        val name = findViewById<TextInputEditText>(R.id.itemNameEdit)
+        val radius = findViewById<TextInputEditText>(R.id.itemRadiusEdit)
+        val type = findViewById<TextInputEditText>(R.id.itemTypeEdit)
         val image = findViewById<ImageView>(R.id.imageView)
 
-        val editButton = findViewById<Button>(R.id.editButton)
-        val deleteButton: Button = findViewById<Button>(R.id.deleteButton)
+        val saveButton=findViewById<Button>(R.id.saveButton)
 
         if (intent.hasExtra("DatabaseShopItem")) {
             val data: DatabaseShopItem = intent.getSerializableExtra("DatabaseShopItem") as DatabaseShopItem
-            name.text = data.name
-            radius.text = data.radius.toString()
-            type.text = data.type
+            name.setText(data.name)
+            radius.setText(data.radius.toString())
+            type.setText(data.type)
+
             if (data.image) {
                 var file: File = createTempFile("activity_item_details.${data.name}.image", "jpg")
                 storage.getFile(file)
@@ -46,13 +46,11 @@ class ItemDetailsActivity : AppCompatActivity() {
             }
         }
 
-        editButton.setOnClickListener {
-            startActivity(Intent(this,ItemEditActivity::class.java))
-        }
+        saveButton.setOnClickListener {
+            val item=DatabaseShopItem(name.text.toString(),type.text.toString(),radius.text as Int,image = false)
+            database.child("shops/${auth.uid}").child(name.text.toString()).setValue(item)
+            startActivity(Intent(this,MainActivity::class.java))
 
-        deleteButton.setOnClickListener {
-            database.child("shops/${auth.uid}").removeValue()
-            startActivity(Intent(this, MainActivity::class.java))
         }
     }
 }
