@@ -16,5 +16,6 @@
         <activity android:name=".MainActivity">
 
         </activity>
+        <activity android:name=".ItemDetailsActivity"></activity>
     </application>
 </manifest>
