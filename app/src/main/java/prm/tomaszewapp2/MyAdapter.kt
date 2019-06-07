@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.recycler_item.view.*
 import java.io.File
@@ -17,7 +18,7 @@ class MyAdapter(private val items: List<DatabaseShopItem>,private val context:Co
     RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
 
     val storage=FirebaseStorage.getInstance().reference
-
+    val auth=FirebaseAuth.getInstance()
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view){
         val image=view.imageView
         val name=view.nameTextView
@@ -42,8 +43,8 @@ class MyAdapter(private val items: List<DatabaseShopItem>,private val context:Co
 
 
         if (items[position].image){
-           var file:File= createTempFile("activity_item_details.${items[position].name}.image","jpg")
-            storage.getFile(file)
+           var file:File= createTempFile("${items[position].name}","jpg")
+            storage.child("${auth.uid}").child("${items[position].name}.jpg").getFile(file)
                 .addOnSuccessListener { taskSnapshot ->
                     val bmp=BitmapFactory.decodeFile(file.absolutePath)
                     holder.image.setImageBitmap(bmp)
